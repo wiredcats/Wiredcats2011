@@ -1,0 +1,11 @@
+.metadata\
+*.o
+*.d
+ctdt.*
+*.out
+Makefile
+*.csv
+PPC603gnu\*
+*.lnk
+TaskOne.cpp
+TaskOne.h
