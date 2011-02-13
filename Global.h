@@ -36,28 +36,12 @@ private:
 	
 	Joystick *jLeft;
 	Joystick *jRight;
-	Joystick *jFakeX;
-	Joystick *jFakeY;
-	
-	Encoder *encoder;
-	
-	// defined in Defines.h
-	R_STATUS *robotStatus;
-	
+
 public:
 	Global(void);
 	
 	Joystick* GetJLeft();
 	Joystick* GetJRight();
-	Joystick* GetJFakeX();
-	Joystick* GetJFakeY();
-	
-	Encoder* GetEncoder();
-	
-	int*	  GetTstInt();
-	
-	R_STATUS* GetRobotStatus();
-	void	  SetRobotStatus(R_STATUS rstat);
 	
 	// this is how tasks get access to the variables
 	static Global *GetInstance();
