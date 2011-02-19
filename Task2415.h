@@ -11,10 +11,13 @@
 class Task2415 {
 private:
 	static Task2415 *TaskList[TASK2415_MAX_TASKS + 1];
+	static int TasksListed;
+	static int TasksSwapped;
 
 protected:
 	int taskID;
 	TASK_STATUS taskStatus;
+	char * taskName;
 
 	bool isAwake;
 	bool keepTaskAlive;
@@ -30,6 +33,8 @@ public:
 	
 	static void SetTaskStatuses(TASK_STATUS ts);
 	void SetIndividualStatus(TASK_STATUS ts);
+
+	char * GetTaskID();
 
 	void SwapAndWait();
 };

@@ -6,17 +6,19 @@ Global::Global(void) {
 	static bool alreadyRun = false;
 	
 	if (!alreadyRun) {
-		if (GLOBAL_JLEFT_EXISTS)  jLeft  = new Joystick(GLOBAL_JLEFT_PORT);
-		if (GLOBAL_JRIGHT_EXISTS) jRight = new Joystick(GLOBAL_JRIGHT_PORT);
+		jLeft  = new Joystick(GLOBAL_JLEFT_PORT);
+		jRight = new Joystick(GLOBAL_JRIGHT_PORT);
 
 		myself = this;
 		
 		alreadyRun = true;
 	}
+
+	printf("instantiated global\n"); 
 }
 
-Joystick* Global::GetJLeft()  { return jLeft;  }
-Joystick* Global::GetJRight() { return jRight; }
+Joystick* Global::GetLeftJoystick()  { return jLeft;  }
+Joystick* Global::GetRightJoystick() { return jRight; }
 
 Global* Global::GetInstance() {
 	return myself;

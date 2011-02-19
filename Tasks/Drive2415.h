@@ -1,11 +1,19 @@
-// test
 #ifndef DRIVE2415_H_
 #define DRIVE2415_H_
 
 #include "WPILib.h"
 #include "../Task2415.h"
+#include "../Global.h"
 
 class Drive2415 : public Task2415 {
+private:
+	Global *global;
+
+	CANJaguar *jagUL, *jagDL, *jagUR, *jagDR;
+	Solenoid *solA, *solB;
+
+	Joystick *stickL, *stickR;
+
 public:
 	Drive2415(void);
 	
@@ -13,3 +21,4 @@ public:
 };
 
 #endif
+

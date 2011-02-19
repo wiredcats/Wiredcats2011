@@ -2,6 +2,10 @@
 #include <math.h>
 
 Task2415 *Task2415::TaskList[TASK2415_MAX_TASKS + 1] = {NULL};
+int Task2415::TasksListed = 0;
+int Task2415::TasksSwapped = 0;
+
+Global global;
 
 #include "Tasks.h"
 
@@ -9,11 +13,7 @@ double RampSpeed(double x, double delta, double multi);
 const double PI = 3.14159;
 
 Wiredcats2415::Wiredcats2415(void) {
-	driveJagA = new CANJaguar(2);
-	driveJagB = new CANJaguar(6);
-	driveJagC = new CANJaguar(5);
-	driveJagD = new CANJaguar(9);
-	
+/*	
 	liftJagA = new CANJaguar(3);
 	liftJagB = new CANJaguar(22);
 	liftJagC = new CANJaguar(8);
@@ -30,8 +30,9 @@ Wiredcats2415::Wiredcats2415(void) {
 	
 	solA = new Solenoid(8, 1);
 	solB = new Solenoid(8, 8);
-
-	comp = new Compressor(6, 1);
+*/
+	
+	comp = new Compressor(8, 1);
 }
 
 void Wiredcats2415::Autonomous(void) {
@@ -39,9 +40,10 @@ void Wiredcats2415::Autonomous(void) {
 }
 
 void Wiredcats2415::OperatorControl(void) {
-	encoder->Start();
+	Task2415::SetTaskStatuses(STATUS_TELEOP);
+//	encoder->Start();
 	comp->Start();
-	double liftSpeed = 0;
+/*	double liftSpeed = 0;
 	bool runRamp = false;
 	bool firstTime = true;
 
@@ -53,11 +55,6 @@ void Wiredcats2415::OperatorControl(void) {
 	bool elbowDown = true;
 
 	while (IsOperatorControl()) {
-		driveJagA->Set(stickR->GetY());
-		driveJagB->Set(stickR->GetY());
-		driveJagC->Set(-stickL->GetY());
-		driveJagD->Set(-stickL->GetY());
-		
 		if (!liftJagA->GetForwardLimitOK()) {
 			encoder->Reset();
 		}
@@ -173,13 +170,15 @@ void Wiredcats2415::OperatorControl(void) {
 
 		Wait(0.05);
 	}
-}
+*/}
 
 double RampSpeed(double x, double delta, double multi) {
-	double speed = multi * sin((PI * x) / delta) + 0.35;
+/*	double speed = multi * sin((PI * x) / delta) + 0.35;
 	if (speed >= 1.0) return 1.0;
 	if (speed <= 0.2) return 0.2;
 	return speed;
+*/
+	return 0;
 }
 
 START_ROBOT_CLASS(Wiredcats2415);

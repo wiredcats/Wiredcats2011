@@ -40,8 +40,8 @@ private:
 public:
 	Global(void);
 	
-	Joystick* GetJLeft();
-	Joystick* GetJRight();
+	Joystick* GetLeftJoystick();
+	Joystick* GetRightJoystick();
 	
 	// this is how tasks get access to the variables
 	static Global *GetInstance();
