@@ -37,14 +37,20 @@ private:
 	Joystick *jLeft;
 	Joystick *jRight;
 
+	DriverStationEnhancedIO *ds;
+
 public:
 	Global(void);
 	
 	Joystick* GetLeftJoystick();
 	Joystick* GetRightJoystick();
 	
+	bool GetDigitalButton(int num);
+	bool GetAnalogButton(int num);
+
 	// this is how tasks get access to the variables
 	static Global *GetInstance();
 };
 
 #endif
+

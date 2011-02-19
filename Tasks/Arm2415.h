@@ -1,11 +1,16 @@
-// test
 #ifndef ARM2415_H_
 #define ARM2415_H_
 
 #include "WPILib.h"
 #include "../Task2415.h"
+#include "../Global.h"
 
 class Arm2415 : public Task2415 {
+private:
+	Global *global;
+	
+	CANJaguar *jagArm;
+
 public:
 	Arm2415(void);
 	
@@ -13,3 +18,4 @@ public:
 };
 
 #endif
+

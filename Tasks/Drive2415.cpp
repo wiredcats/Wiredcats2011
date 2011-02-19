@@ -3,10 +3,10 @@
 Drive2415::Drive2415(void) {
 	global = Global::GetInstance();
 
-	jagUL = new CANJaguar(28);
-	jagDL = new CANJaguar(25);
-	jagUR = new CANJaguar(21);
-	jagDR = new CANJaguar(24);
+	jagUL = new CANJaguar(3);
+	jagDL = new CANJaguar(9);
+	jagUR = new CANJaguar(22);
+	jagDR = new CANJaguar(8);
 
 	solA = new Solenoid(8, 1);
 	solB = new Solenoid(8, 3);
@@ -27,11 +27,11 @@ int Drive2415::Main(int a2, int a3, int a4, int a5, int a6, int a7, int a8, int 
 			jagDR->Set(stickR->GetY());
 
 			if (stickL->GetTrigger()) {
-				solA->Set(true);
-				solB->Set(false);
-			} else {
 				solA->Set(false);
 				solB->Set(true);
+			} else {
+				solA->Set(true);
+				solB->Set(false);
 			}
 		}
 		SwapAndWait();

@@ -32,7 +32,7 @@ Wiredcats2415::Wiredcats2415(void) {
 	solB = new Solenoid(8, 8);
 */
 	
-	comp = new Compressor(8, 1);
+	comp = new Compressor(5, 1);
 }
 
 void Wiredcats2415::Autonomous(void) {
