@@ -5,10 +5,16 @@
 #include "../Task2415.h"
 #include "../Global.h"
 
+#define WAIT_FOR_GRIP_INPUT (10)
+#define SCORE_RUN_BACK (20)
+#define DELAY_GRIP_MOTOR (30)
+
 class Gripper2415 : public Task2415 {
 private:
 	Global *global;
-	CANJaguar *jagGripper;
+
+	Jaguar *jagGripper;
+
 	Joystick *stickL, *stickR;
 
 public:

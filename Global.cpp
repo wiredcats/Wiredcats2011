@@ -8,11 +8,11 @@ Global::Global(void) {
 	if (!alreadyRun) {
 		jLeft  = new Joystick(GLOBAL_JLEFT_PORT);
 		jRight = new Joystick(GLOBAL_JRIGHT_PORT);
-
-		ds = &DriverStation::GetInstance()->GetEnhancedIO();
+		jFakeA = new Joystick(GLOBAL_JFAKEA_PORT);
+		jFakeB = new Joystick(GLOBAL_JFAKEB_PORT);
 
 		myself = this;
-		
+	
 		alreadyRun = true;
 	}
 
@@ -21,19 +21,8 @@ Global::Global(void) {
 
 Joystick* Global::GetLeftJoystick()  { return jLeft;  }
 Joystick* Global::GetRightJoystick() { return jRight; }
-
-bool Global::GetDigitalButton(int num) { return !(ds->GetDigital(num)); }
-
-bool Global::GetAnalogButton(int num) {
-	int j;
-	for (j = 1; j <= 8; j++) {
-		if (ds->GetAnalogIn(j) <= 0.01) {
-			return (j == num);
-		}
-	}
-
-	return 0;
-}
+Joystick* Global::GetFakeAJoystick() { return jFakeA; }
+Joystick* Global::GetFakeBJoystick() { return jFakeB; }	
 
 Global* Global::GetInstance() {
 	return myself;

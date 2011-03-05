@@ -4,15 +4,10 @@
 #include "WPILib.h"
 #include "Defines.h"
 
-#define GLOBAL_JLEFT_EXISTS  (1)
-#define GLOBAL_JRIGHT_EXISTS (1)
-#define GLOBAL_JFAKEX_EXISTS (0)
-#define GLOBAL_JFAKEY_EXISTS (0)
-
 #define GLOBAL_JLEFT_PORT	 (1)
 #define GLOBAL_JRIGHT_PORT	 (2)
-#define GLOBAL_JFAKEX_PORT	 (3)
-#define GLOBAL_JFAKEY_PORT	 (4)
+#define GLOBAL_JFAKEA_PORT	 (3)
+#define GLOBAL_JFAKEB_PORT	 (4)
 
 /* Global
  * ======
@@ -34,8 +29,7 @@ private:
 	// the instance
 	static Global *myself;
 	
-	Joystick *jLeft;
-	Joystick *jRight;
+	Joystick *jLeft, *jRight, *jFakeA, *jFakeB;
 
 	DriverStationEnhancedIO *ds;
 
@@ -44,9 +38,8 @@ public:
 	
 	Joystick* GetLeftJoystick();
 	Joystick* GetRightJoystick();
-	
-	bool GetDigitalButton(int num);
-	bool GetAnalogButton(int num);
+	Joystick* GetFakeAJoystick();
+	Joystick* GetFakeBJoystick();	
 
 	// this is how tasks get access to the variables
 	static Global *GetInstance();

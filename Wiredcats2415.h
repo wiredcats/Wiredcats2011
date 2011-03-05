@@ -7,13 +7,8 @@
 
 class Wiredcats2415 : public SimpleRobot {
 private:
-	CANJaguar *liftJagA, *liftJagB, *liftJagC, *gripJag, *elbowJag;
-	Joystick *stickL, *stickR;
-
-	Encoder *encoder;
-	AnalogChannel *pot;
-	Solenoid *solA, *solB;
 	Compressor *comp;
+	Relay *lightsA;
 
 public:
 	Wiredcats2415(void);

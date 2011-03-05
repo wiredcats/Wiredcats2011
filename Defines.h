@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef DEFINES_H_
 #define DEFINES_H_
 

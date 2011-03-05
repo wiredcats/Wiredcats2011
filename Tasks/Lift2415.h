@@ -5,14 +5,41 @@
 #include "../Task2415.h"
 #include "../Global.h"
 
+#define LIFT2415_JAGLIFTA_PORT (3)
+#define LIFT2415_JAGLIFTB_PORT (2)
+#define LIFT2415_JAGLIFTC_PORT (6)
+
+#define LIFT2415_ENCODER_TOP_LOW_VALUE (2300)
+#define LIFT2415_ENCODER_MID_LOW_VALUE (920)
+#define LIFT2415_ENCODER_BOT_LOW_VALUE (0)
+#define LIFT2415_ENCODER_TOP_HGH_VALUE (2580)
+#define LIFT2415_ENCODER_MID_HGH_VALUE (1170)
+#define LIFT2415_ENCODER_BOT_HGH_VALUE (0)
+
+const float LIFT2415_LOW_LIFT_SPEED = 0.45;
+const float LIFT2415_MAX_LIFT_SPEED_UP = 1.0;
+const float LIFT2415_MAX_LIFT_SPEED_DOWN = 0.70;
+#define LIFT2415_DELTARAMP (450)
+
+const float LIFT2415_SCORE_DROP_SPEED = 0.4;
+
+#define WAIT_FOR_INPUT (20)
+#define RUN_RAMP (30)
+#define SCORE_DROP_LIFT (40)
+#define MOVE_TO_AUTO_POSITION (50)
+#define MOVE_TO_GROUND_POSITION (60)
+
+const float LIFT2415_MANUAL_SPEED_UP = 0.75;
+const float LIFT2415_MANUAL_SPEED_DOWN = 0.4;
+
 class Lift2415 : public Task2415 {
 private:
 	Global *global;
 
-	CANJaguar *jagLiftA, *jagLiftB, *jagLiftC;
+	Jaguar *jagLift;
 	Encoder *encoder;
 
-	Joystick *stickL, *stickR;
+	Joystick *stickL, *stickR, *stickFA, *stickFB;
 
 public:
 	Lift2415(void);
@@ -20,6 +47,8 @@ public:
 	virtual int Main(int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10);
 	
 	void SyncMotorLift(float speed);
+	bool PositionButtonPressed();
+	float RampMotor(float x, float initial, float goal, float lowSpeed, float maxSpeed, float deltaValue);
 };
 
 #endif

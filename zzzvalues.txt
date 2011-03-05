@@ -1,12 +1,10 @@
-2 => Drive DR
-6 => Drive UR
-5 => Drive DL
-9 => Drive UL
+arm - 29
 
-3 => Lift A
-7 => Lift B
-8 => Lift C
+jul - 28
+jdl - 25
+jur - 21
+jdr - 24
 
-29 => Gripper
+grip - 20
 
-4 => Elbow
+lift - 26, 27, 22
