@@ -18,8 +18,8 @@
 
 #define SCORE_FALL_TO_NEUTRAL (40)
 
-const float ARM_JUMPSTART_PERIOD = 0.4;
-const float DEPLOY_TUBE_PERIOD = 0.2;
+const float ARM_JUMPSTART_PERIOD = 0.1;
+const float DEPLOY_TUBE_PERIOD = 0.3;
 const float GRIP_DELAY_PERIOD = 0.8;
 const float PERCENT_DAVID_GAYNESS = 100.0;
 

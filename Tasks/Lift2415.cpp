@@ -4,12 +4,16 @@
 Lift2415::Lift2415(void) {
 	global = Global::GetInstance();
 
-	jagLift = new Jaguar(LIFT2415_JAGLIFTA_PORT);
+	jagLiftA = new Jaguar(LIFT2415_JAGLIFTA_PORT);
+	jagLiftB = new Jaguar(LIFT2415_JAGLIFTB_PORT);
+	jagLiftC = new Jaguar(LIFT2415_JAGLIFTC_PORT);
 
 	stickL = global->GetLeftJoystick();
 	stickR = global->GetRightJoystick();
 	stickFA = global->GetFakeAJoystick();
 	stickFB = global->GetFakeBJoystick();
+
+	botLS = new DigitalInput(13);
 
 	encoder = new Encoder(1, 3);
 
@@ -126,7 +130,11 @@ int Lift2415::Main(int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a
 }
 
 void Lift2415::SyncMotorLift(float speed) {
-	jagLift->Set(-speed);
+	if (speed <= 0 && botLS->Get()) speed = 0;
+
+	jagLiftA->Set(-speed);
+	jagLiftB->Set(-speed);
+	jagLiftC->Set(-speed);
 }
 
 bool Lift2415::PositionButtonPressed() {

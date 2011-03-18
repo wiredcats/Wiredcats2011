@@ -7,6 +7,8 @@ Gripper2415::Gripper2415(void) {
 	stickL = global->GetLeftJoystick();
 	stickR = global->GetRightJoystick();
 
+	botLS = new DigitalInput(10);
+
 	taskState = WAIT_FOR_GRIP_INPUT;
 
 	Start("gripper2415");
@@ -18,19 +20,16 @@ int Gripper2415::Main(int a2, int a3, int a4, int a5, int a6, int a7, int a8, in
 		if (taskStatus == STATUS_TELEOP || STATUS_AUTO) {
 			switch (taskState) {
 				case WAIT_FOR_GRIP_INPUT:
-					if (stickL->GetRawButton(2)) {
-						jagGripper->Set(0.8);
-					} else {
-						jagGripper->Set(-0.8);
-					}
+					if (stickL->GetRawButton(2)) SyncMotorGrip(1.0);
+					else 			     SyncMotorGrip(-1.0);
 					break;
 				
 				case DELAY_GRIP_MOTOR:
-					jagGripper->Set(0.0);
+					SyncMotorGrip(0.0);
 					break;
 
 				case SCORE_RUN_BACK:
-					jagGripper->Set(0.4);
+					SyncMotorGrip(0.5);
 					break;
 			}
 		}
@@ -40,3 +39,8 @@ int Gripper2415::Main(int a2, int a3, int a4, int a5, int a6, int a7, int a8, in
 	return 0;
 }
 
+void Gripper2415::SyncMotorGrip(float speed) {
+	if (speed <= 0 && !botLS->Get()) speed = 0;
+
+	jagGripper->Set(speed);
+}

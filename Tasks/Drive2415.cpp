@@ -28,7 +28,7 @@ int Drive2415::Main(int a2, int a3, int a4, int a5, int a6, int a7, int a8, int 
 			jagLeft->Set(-stickL->GetY());
 			jagRight->Set(stickR->GetY());
 
-			if (!stickL->GetTrigger()) {
+			if (stickL->GetTrigger()) {
 				solA->Set(false);
 				solB->Set(true);
 			} else {
@@ -36,8 +36,8 @@ int Drive2415::Main(int a2, int a3, int a4, int a5, int a6, int a7, int a8, int 
 				solB->Set(false);
 			}
 		} else if (taskStatus == STATUS_AUTO) {
-			solA->Set(false);
-			solB->Set(true);
+			solA->Set(true);
+			solB->Set(false);
 
 			switch (taskState) {
 				case GO_STRAIGHT:

@@ -8,6 +8,8 @@
 class Deployment2415 : public Task2415 {
 private:
 	Global *global;
+	Solenoid *swingArmA, *swingArmB, *shootMinibotA, *shootMinibotB;
+	Joystick *stickFB;
 
 public:
 	Deployment2415(void);

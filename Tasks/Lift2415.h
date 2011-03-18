@@ -6,8 +6,8 @@
 #include "../Global.h"
 
 #define LIFT2415_JAGLIFTA_PORT (3)
-#define LIFT2415_JAGLIFTB_PORT (2)
-#define LIFT2415_JAGLIFTC_PORT (6)
+#define LIFT2415_JAGLIFTB_PORT (6)
+#define LIFT2415_JAGLIFTC_PORT (7)
 
 #define LIFT2415_ENCODER_TOP_LOW_VALUE (2300)
 #define LIFT2415_ENCODER_MID_LOW_VALUE (920)
@@ -16,12 +16,12 @@
 #define LIFT2415_ENCODER_MID_HGH_VALUE (1170)
 #define LIFT2415_ENCODER_BOT_HGH_VALUE (0)
 
-const float LIFT2415_LOW_LIFT_SPEED = 0.45;
+const float LIFT2415_LOW_LIFT_SPEED = 0.9;
 const float LIFT2415_MAX_LIFT_SPEED_UP = 1.0;
 const float LIFT2415_MAX_LIFT_SPEED_DOWN = 0.70;
 #define LIFT2415_DELTARAMP (450)
 
-const float LIFT2415_SCORE_DROP_SPEED = 0.4;
+const float LIFT2415_SCORE_DROP_SPEED = 0.3;
 
 #define WAIT_FOR_INPUT (20)
 #define RUN_RAMP (30)
@@ -29,15 +29,17 @@ const float LIFT2415_SCORE_DROP_SPEED = 0.4;
 #define MOVE_TO_AUTO_POSITION (50)
 #define MOVE_TO_GROUND_POSITION (60)
 
-const float LIFT2415_MANUAL_SPEED_UP = 0.75;
-const float LIFT2415_MANUAL_SPEED_DOWN = 0.4;
+const float LIFT2415_MANUAL_SPEED_UP = 1.0;
+const float LIFT2415_MANUAL_SPEED_DOWN = 0.75;
 
 class Lift2415 : public Task2415 {
 private:
 	Global *global;
 
-	Jaguar *jagLift;
+	Jaguar *jagLiftA, *jagLiftB, *jagLiftC;
 	Encoder *encoder;
+
+	DigitalInput *botLS, *botTS;
 
 	Joystick *stickL, *stickR, *stickFA, *stickFB;
 

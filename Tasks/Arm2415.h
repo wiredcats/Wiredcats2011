@@ -25,6 +25,8 @@ private:
 	
 	Jaguar *jagArm;
 
+	DigitalInput *botTS, *botLS;
+
 	Joystick *stickL, *stickFB;
 	
 	AnalogChannel *pot;
@@ -33,6 +35,8 @@ public:
 	
 	virtual int Main(int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10);
 	float RampMotor(float x, float initial, float goal, float lowSpeed, float maxSpeed, float deltaValue);
+
+	void SyncMotorArm(float speed);
 };
 
 #endif
