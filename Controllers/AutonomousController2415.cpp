@@ -44,6 +44,7 @@ int AutonomousController2415::Main(int a2, int a3, int a4, int a5, int a6, int a
 
 			switch (taskState) {
 				case FOLLOW_LINE:
+					arm->SetState(BACKDRIVE);
 					if (left && middle && right) {
 						drive->SetState(STOP_BOT);
 						taskState = STOP_BOT_AUTO;
@@ -175,7 +176,7 @@ int AutonomousController2415::Main(int a2, int a3, int a4, int a5, int a6, int a
 					}
 					break;
 				case MOVE_BACK_TWO:
-					if (backTimer->HasPeriodPassed(1.5)) {
+					if (backTimer->HasPeriodPassed(3.0)) {
 						backTimer->Stop();
 						backTimer->Reset();
 						taskState = CHILL;

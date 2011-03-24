@@ -1,6 +1,6 @@
-#include "AutonomousController2415.h"
+#include "TwoTubeAutonomousController2415.h"
 
-AutonomousController2415::AutonomousController2415(void) {
+TwoTubeAutonomousController2415::TwoTubeAutonomousController2415(void) {
 	global = Global::GetInstance();
 
 	drive = Task2415::SearchForTask("drive2415");
@@ -17,25 +17,33 @@ AutonomousController2415::AutonomousController2415(void) {
 	backTimer = new Timer();
 	gripTimer = new Timer();
 	hardTimer = new Timer();
+	moveTimer = new Timer();
 
 	printf("stalling to allow tasks to be initialized\n");
 	Wait(1.0); 
 	
 	taskState = FOLLOW_LINE;
 
-	Start("autonomouscontroller2415");
+	Start("twotubeautonomouscontroller2415");
 }
 
-int AutonomousController2415::Main(int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10) {
+int TwoTubeAutonomousController2415::Main(int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10) {
 
 	int left, middle, right = 0;
 	bool goRight = false;
+	bool firstRun = true;
 
 	printf("entering %s main\n", taskName);
 	drive->SetState(GO_STRAIGHT);
 
+	moveTimer->Start();
+
 	while (keepTaskAlive) {
 		if (taskStatus == STATUS_AUTO) {
+			if (firstRun) {
+				moveTimer->Start();
+				firstRun = false;
+			}
 			left = psLeft->Get() ? 1 : 0;
 			middle = psMid->Get() ? 1 : 0;
 			right = psRight->Get() ? 1 : 0;
@@ -45,7 +53,7 @@ int AutonomousController2415::Main(int a2, int a3, int a4, int a5, int a6, int a
 			switch (taskState) {
 				case FOLLOW_LINE:
 					if (left && middle && right) {
-						drive->SetState(STOP_BOT);
+						drive->SetState(MOVE_BACK);
 						taskState = STOP_BOT_AUTO;
 						stopTimer->Start();
 					} else {
@@ -63,6 +71,10 @@ int AutonomousController2415::Main(int a2, int a3, int a4, int a5, int a6, int a
 							taskState = TURN_SOFT_TO_LINE;
 						}	
 					}
+					
+					if (moveTimer->HasPeriodPassed(1.5)) {
+						lift->SetState(MOVE_TO_AUTO_POSITION);
+					}	
 
 
 					break;
@@ -117,54 +129,21 @@ int AutonomousController2415::Main(int a2, int a3, int a4, int a5, int a6, int a
 					}
 					break;
 				case STOP_BOT_AUTO:
-					if (stopTimer->HasPeriodPassed(0.5)) {
-						taskState = MOVE_BACKWARDS;
-						drive->SetState(MOVE_BACK);
+					if (stopTimer->HasPeriodPassed(0.1)) {
+						taskState = RELEASE;
+
+						drive->SetState(STOP_BOT);
+
+						lift->SetState(SCORE_DROP_LIFT);
+						gripper->SetState(SCORE_RUN_BACK);
 
 						stopTimer->Stop();
 						stopTimer->Reset();
 
 						backTimer->Start();
 					}
-				case MOVE_BACKWARDS:
-					if (backTimer->HasPeriodPassed(0.3)) {
-						taskState = LIFT_ELEVATOR;
-						lift->SetState(MOVE_TO_AUTO_POSITION);
-						drive->SetState(STOP_BOT);
-
-						backTimer->Stop();
-						backTimer->Reset();
-					}
-					break;
-				case LIFT_ELEVATOR:
-					if (lift->StateComplete()) {
-						forTimer->Start();
-						taskState = FORWARD;
-						drive->SetState(GO_STRAIGHT);
-					}
-					break;
-				case FORWARD:
-					if (forTimer->HasPeriodPassed(0.15)) {
-						taskState = ARM_DOWN;
-						forTimer->Stop();
-						forTimer->Reset(); 
-						drive->SetState(STOP_BOT);
-						gripper->SetState(SCORE_RUN_BACK);
-						gripTimer->Start();
-						arm->SetState(SCORE_FALL_TO_NEUTRAL);
-					}
-					break;
-				case ARM_DOWN:
-					if (gripTimer->HasPeriodPassed(0.1)) {
-						gripTimer->Stop();
-						gripTimer->Reset();
-						lift->SetState(SCORE_DROP_LIFT);	
-						gripTimer->Start();
-						taskState = RELEASE;
-					}
-					break;
 				case RELEASE:
-					if (gripTimer->HasPeriodPassed(0.25)) {
+					if (gripTimer->HasPeriodPassed(0.3)) {
 						gripTimer->Stop();
 						gripTimer->Reset();
 						taskState = MOVE_BACK_TWO;

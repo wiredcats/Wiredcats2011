@@ -14,6 +14,8 @@ Drive2415::Drive2415(void) {
 	stickL = global->GetLeftJoystick();
 	stickR = global->GetRightJoystick();
 
+	gyro = new Gyro(1, 1);
+
 	taskState = 100;
 
 	Start("drive2415");
@@ -21,8 +23,12 @@ Drive2415::Drive2415(void) {
 
 int Drive2415::Main(int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10) {
 	printf("entering %s main\n", taskName);
+	gyro->Reset();
 	while (keepTaskAlive) {
 		if (taskStatus == STATUS_TELEOP) {
+	
+			printf("gyro: [%g]\n", gyro->GetAngle());		
+	
 			lightsA->Set(Relay::kForward);
 
 			jagLeft->Set(-stickL->GetY());

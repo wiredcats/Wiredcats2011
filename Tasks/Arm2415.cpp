@@ -68,6 +68,10 @@ int Arm2415::Main(int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9
 					SyncMotorArm(ARM2415_SCORE_FALL_SPEED);
 					break;
 
+				case BACKDRIVE:
+					SyncMotorArm(-ARM2415_SCORE_FALL_SPEED);
+					break;
+
 				default:
 					printf("reached default, moving to WAIT_FOR_ARM_INPUT\n");
 					taskState = WAIT_FOR_ARM_INPUT;

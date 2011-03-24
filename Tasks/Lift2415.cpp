@@ -33,11 +33,30 @@ int Lift2415::Main(int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a
 	float liftSpeed = 0.0;
 	encoder->Start();
 
+
 	while (keepTaskAlive) {
 		if (taskStatus == STATUS_TELEOP || STATUS_AUTO) {
 			encoderValue = encoder->Get();
 			if (encoderValue < 0) encoder->Reset();
 			printf("enc: [%d]", encoder->Get());
+
+			// three position control
+			if (PositionButtonPressed()) {
+				initialValue = encoderValue;
+				if (initialValue < 0) encoderValue = 0;
+
+				if (stickFA->GetRawButton(6)) { encoderGoal = LIFT2415_ENCODER_TOP_LOW_VALUE; } 
+				if (stickFA->GetRawButton(9)) { encoderGoal = LIFT2415_ENCODER_MID_LOW_VALUE; } 
+				if (stickFA->GetRawButton(5)) { encoderGoal = LIFT2415_ENCODER_BOT_LOW_VALUE; } 
+
+				if (stickFA->GetRawButton(7)) { encoderGoal = LIFT2415_ENCODER_TOP_HGH_VALUE; } 
+				if (stickFA->GetRawButton(8)) { encoderGoal = LIFT2415_ENCODER_MID_HGH_VALUE; } 
+				if (stickFA->GetRawButton(3)) { encoderGoal = LIFT2415_ENCODER_BOT_HGH_VALUE; } 
+
+				liftSign = (encoderGoal > initialValue) ? 1 : -1;
+
+				taskState = RUN_RAMP;
+			}
 
 			switch (taskState) {
 				case WAIT_FOR_INPUT:
@@ -52,24 +71,6 @@ int Lift2415::Main(int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a
 					
 					if (stickFB->GetRawButton(5)) {
 						taskState = MOVE_TO_GROUND_POSITION;
-					}
- 
-					// three position control
-					if (PositionButtonPressed()) {
-						initialValue = encoderValue;
-						if (initialValue < 0) encoderValue = 0;
-
-						if (stickFA->GetRawButton(6)) { encoderGoal = LIFT2415_ENCODER_TOP_LOW_VALUE; } 
-						if (stickFA->GetRawButton(9)) { encoderGoal = LIFT2415_ENCODER_MID_LOW_VALUE; } 
-						if (stickFA->GetRawButton(5)) { encoderGoal = LIFT2415_ENCODER_BOT_LOW_VALUE; } 
-
-						if (stickFA->GetRawButton(7)) { encoderGoal = LIFT2415_ENCODER_TOP_HGH_VALUE; } 
-						if (stickFA->GetRawButton(8)) { encoderGoal = LIFT2415_ENCODER_MID_HGH_VALUE; } 
-						if (stickFA->GetRawButton(3)) { encoderGoal = LIFT2415_ENCODER_BOT_HGH_VALUE; } 
-
-						liftSign = (encoderGoal > initialValue) ? 1 : -1;
-
-						taskState = RUN_RAMP;
 					}
 
 					break;

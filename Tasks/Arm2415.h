@@ -18,6 +18,7 @@ const float ARM2415_SCORE_FALL_SPEED = 0.4;
 #define WAIT_FOR_ARM_INPUT (20)
 #define RUN_ARM_RAMP (30)
 #define SCORE_FALL_TO_NEUTRAL_ARM (40)
+#define BACKDRIVE (50)
 
 class Arm2415 : public Task2415 {
 private:

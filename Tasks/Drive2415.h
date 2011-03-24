@@ -27,6 +27,8 @@ private:
 
 	Joystick *stickL, *stickR;
 
+	Gyro *gyro;
+
 public:
 	Drive2415(void);
 	
